@@ -17,6 +17,13 @@ mysql> show tables;
 +---------------------+
 8 rows in set (0.00 sec)
 
+select ISBN
+from Enroll, BookCourse
+where Enroll.SID = 4 and Enroll.CID = BookCourse.CID;
+(gets isbn of all the books that student with sid = 4 needs)
+
+
+
 mysql> select * from Student;
 +-----+-----------------+------------+
 | SID | Name            | DOB        |
