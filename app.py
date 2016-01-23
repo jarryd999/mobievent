@@ -78,7 +78,8 @@ def fetchBooks(studentid):
 	cursor = db.cursor()
 	
 	# execute SQL query using execute() method.
-	cursor.execute("Select ISBN from BookCourse, Enroll where BookCourse.CID = Enroll.CID and SID = " + studentid)
+	cursor.execute("select distinct Book.ISBN, Book.Name, Book.Price from BookCourse, Book, Enroll where Bo\
+okCourse.CID = Enroll.cid and Book.ISBN = BookCourse.ISBN and sid = " + studentid)
 
 	# Fetch a single row using fetchone() method.
 	data = cursor.fetchall()
