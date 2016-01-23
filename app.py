@@ -22,8 +22,6 @@ def nearbyBookstore( ):
 	# prepare a cursor object using cursor() method
 	cursor = db.cursor()
 	
-	cursor.execute("use mobievent")
-
 	# execute SQL query using execute() method.
 	cursor.execute("Select ISBN from BookCourse where CID in ( SELECT CID from Enroll where SID = 4)")
 
@@ -50,7 +48,6 @@ def signIn():
 	cursor = db.cursor()
 
 	# execute SQL query using execute() method.
-	cursor.execute("use mobievent")
 	cursor.execute("INSERT INTO Attendance values (372, 1, CURRENT_TIMESTAMP, True)")
 
 	print "attendance input successful"
