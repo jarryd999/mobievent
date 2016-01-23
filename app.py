@@ -44,6 +44,52 @@ def nearbyBookstore( ):
 	db.close()
 	return jsonify( {'result' : data})
 
+
+#check what books student needs to buy, prompt if (s)he wants to buy now
+#output: (int) 0 if they don't need books, 1 if they do
+@app.route('/bookstore/onEnter')
+def insideBookstore( ):
+	# Open database connection
+	db = MySQLdb.connect("localhost","root","D0nkeyba!!s","mobievent" )
+
+	# prepare a cursor object using cursor() method
+	cursor = db.cursor()
+	
+	# execute SQL query using execute() method.
+	cursor.execute("Select ISBN from BookCourse where CID in ( SELECT CID from Enroll where SID = 4)")
+
+	# Fetch a single row using fetchone() method.
+	data = cursor.fetchall()
+	# disconnect from server
+	db.close()
+	
+	#check if there are books they need, return true if so
+	if data.size > 0:
+		return 1;
+	return 0;	
+
+#send the book order over to the book store client and let student know of wait
+@app.route('/bookstore/fetchBooks')
+def fetchBooks( ):
+	# Open database connection
+	db = MySQLdb.connect("localhost","root","D0nkeyba!!s","mobievent" )
+
+	# prepare a cursor object using cursor() method
+	cursor = db.cursor()
+	
+	# execute SQL query using execute() method.
+	cursor.execute("Select ISBN from BookCourse where CID in ( SELECT CID from Enroll where SID = 4)")
+
+	# Fetch a single row using fetchone() method.
+	data = cursor.fetchall()
+	# disconnect from server
+	db.close()
+
+	if data.size > 0:
+		#send which books they need over to the book store employee
+		return 1;
+	return 0;
+
 # put in SID as param later
 @app.route('/classroom/attendance/signin')
 def signIn():
@@ -63,7 +109,6 @@ def signIn():
 	# disconnect from server
 	db.close()
 	return "data"
-	
 	
 
 if __name__ == '__main__':
