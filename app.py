@@ -21,6 +21,8 @@ def nearbyBookstore( ):
 
 	# prepare a cursor object using cursor() method
 	cursor = db.cursor()
+	
+	cursor.execute("use mobievent")
 
 	# execute SQL query using execute() method.
 	cursor.execute("Select ISBN from BookCourse where CID in ( SELECT CID from Enroll where SID = 4)")
