@@ -105,7 +105,7 @@ def signIn(classid, studentid):
 	output = 0
 	try:
 		# execute SQL query using execute() method.
-		cursor.execute("INSERT INTO Attendance values (classid, studentid, CURRENT_TIMESTAMP, True)")
+		cursor.execute("INSERT INTO Attendance values (" + classid + ", " + studentid + ", CURRENT_TIMESTAMP, True)")
 		output = 1
 	except MySQLdb.IntegrityError:
 		output = 0
@@ -116,17 +116,16 @@ def signIn(classid, studentid):
 	return jsonify({'result' : output})
 	
 # return 1 if student was already signed in, 0 if not signedin yet
-@app.route('/classroom/attendance/checksignedin/<studentid>')
-def checkSignedIn(studentid):
+@app.route('/classroom/attendance/checksignedin/<classid>/<studentid>')
+def checkSignedIn(classid, studentid):
 	# Open database connection
 	db = MySQLdb.connect("localhost","root","D0nkeyba!!s","mobievent" )
 
 	# prepare a cursor object using cursor() method
 	cursor = db.cursor()
-
 	
 	# execute SQL query using execute() method.
-	cursor.execute("SELECT * FROM Attendance where sid = " + studentid + " and date(date) = curdate()")
+	cursor.execute("SELECT * FROM Attendance where sid = " + studentid + " and cid = " + classid + " and date(date) = curdate()")
 	data = cursor.fetchall()
 	
 	db.close()
