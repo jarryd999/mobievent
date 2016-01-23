@@ -51,7 +51,7 @@ def signIn():
 
 	# execute SQL query using execute() method.
 	cursor.execute("use mobievent")
-	cursor.execute("INSERT INTO Attendance values (372, 1, CURRENT_TIMESTAMP, True")
+	cursor.execute("INSERT INTO Attendance values (372, 1, CURRENT_TIMESTAMP, True)")
 
 	print "attendance input successful"
 
