@@ -1,0 +1,78 @@
+todo
+
+sid from student
+isbn from book
+mysql> show tables;
++---------------------+
+| Tables_in_mobievent |
++---------------------+
+| Attendance          |
+| Book           *     | 1~5
+| BookCourse      *    |
+| BookReservation     |
+| Course          *    |	372, 409, 410, 445, 452, 460
+| Enroll           *   |
+| Instructor      *    |
+| Student         *    | 1~5
++---------------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from Student;
++-----+-----------------+------------+
+| SID | Name            | DOB        |
++-----+-----------------+------------+
+|   1 | Bob Johnson     | 1990-02-15 |
+|   2 | Beverly Meier   | 1991-12-07 |
+|   3 | Marilyn Smith   | 1975-09-11 |
+|   4 | Jennifer Casey  | 1985-07-25 |
+|   5 | Vivian Martinez | 1992-06-30 |
+|   6 | Min Kwon        | 1994-01-01 |
+|   7 | Jarryd          | 1990-05-02 |
+|   8 | Nick            | 1989-08-21 |
+|   9 | David           | 1993-04-09 |
+
+mysql> select * from BookCourse;
++------+-----+----------+
+| ISBN | CID | Required |
++------+-----+----------+
+|    1 | 372 |        1 |
+|    2 | 409 |        0 |
+|    3 | 410 |        1 |
+|    4 | 445 |        1 |
+|    5 | 452 |        0 |
++------+-----+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Course;
++-----+-----+-----------------------+---------------------------+----------+
+| CID | EID | Name                  | Description               | Room     |
++-----+-----+-----------------------+---------------------------+----------+
+| 372 |   1 | Comparative Languages | Learn buncha stuff        | BIOW 210 |
+| 409 |   5 | Parallel Programming  | do stuff at the same time | ILC 140  |
+| 410 |   4 | Compiler              | Compiler desc             | ENG 200  |
+| 445 |   3 | Algorithms            | NULL                      | GS 930   |
+| 452 |   6 | Operating Systems     | NULL                      | GS 930   |
+| 460 |   2 | Database Design       | Normal formsss            | GS 930   |
++-----+-----+-----------------------+---------------------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from Enroll order by sid;
++-----+-----+
+| SID | CID |
++-----+-----+
+|   1 | 372 |
+|   1 | 409 |
+|   1 | 460 |
+|   2 | 410 |
+|   2 | 445 |
+|   2 | 452 |
+|   3 | 372 |
+|   3 | 409 |
+|   3 | 410 |
+|   3 | 445 |
+|   4 | 372 |
+|   4 | 452 |
+|   4 | 460 |
+|   5 | 372 |
+|   5 | 410 |
++-----+-----+
