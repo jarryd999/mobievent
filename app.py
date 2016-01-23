@@ -34,7 +34,7 @@ def nearbyBookstore( ):
 
 	# disconnect from server
 	db.close()
-	return jsonify(data)
+	return "data"
 
 # put in SID as param later
 @app.route('/classroom/attendance/signin')
@@ -54,7 +54,7 @@ def signIn():
 
 	# disconnect from server
 	db.close()
-	return 0
+	return "data"
 	
 	
 
