@@ -28,13 +28,16 @@ def nearbyBookstore( ):
 	# Fetch a single row using fetchone() method.
 	data = cursor.fetchall()
 	
+	ret = ""
+	
 	for row in data:
-		print row
+		ret += row
+		ret += "\n"
 
 
 	# disconnect from server
 	db.close()
-	return "data"
+	return ret
 
 # put in SID as param later
 @app.route('/classroom/attendance/signin')
