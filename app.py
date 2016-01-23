@@ -27,10 +27,10 @@ def index():
 #handle walking by the store
 #http://ourserver.cloud.google.com/bookstore/nearby
 @app.route('/bookstore/nearby')
-def nearbyBookstore( SID ):
+def nearbyBookstore( ):
 	#check if they've picked up textbooks
 	#if not, respond to notify to grab them
-	return "gotcha"
+	return "Database version : %s " % data
 
 
 
