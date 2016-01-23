@@ -32,8 +32,8 @@ def nearbyBookstore( ):
 	
 	for row in data:
 		for elem in row:
-			print elem
-			ret += elem
+			print elem	
+			ret += str(elem)
 			ret += "\n"
 
 
