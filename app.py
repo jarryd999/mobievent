@@ -69,8 +69,8 @@ def insideBookstore( ):
 	return 0;	
 
 #send the book order over to the book store client and let student know of wait
-@app.route('/bookstore/fetchBooks')
-def fetchBooks( ):
+@app.route('/bookstore/fetchBooks/<studentid>')
+def fetchBooks(studentid):
 	# Open database connection
 	db = MySQLdb.connect("localhost","root","D0nkeyba!!s","mobievent" )
 
@@ -78,17 +78,14 @@ def fetchBooks( ):
 	cursor = db.cursor()
 	
 	# execute SQL query using execute() method.
-	cursor.execute("Select ISBN from BookCourse where CID in ( SELECT CID from Enroll where SID = 4)")
+	cursor.execute("Select ISBN from BookCourse, Enroll where BookCourse.CID = Enroll.CID and SID = " + studentid)
 
 	# Fetch a single row using fetchone() method.
 	data = cursor.fetchall()
 	# disconnect from server
 	db.close()
 
-	if data.size > 0:
-		#send which books they need over to the book store employee
-		return 1;
-	return 0;
+	return jsonify({'result' : data})
 
 # returns 1 if signIn was successful
 # returns 0 if not successful
