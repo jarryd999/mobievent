@@ -3,7 +3,7 @@ from flask import Flask
 import MySQLdb
 
 # Open database connection
-db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
+db = MySQLdb.connect("localhost","root","D0nkeyba!!s","mobievent" )
 
 # prepare a cursor object using cursor() method
 cursor = db.cursor()
@@ -30,7 +30,7 @@ def index():
 def nearbyBookstore( SID ):
 	#check if they've picked up textbooks
 	#if not, respond to notify to grab them
-
+	return "gotcha"
 
 
 
