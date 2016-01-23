@@ -31,8 +31,10 @@ def nearbyBookstore( ):
 	ret = ""
 	
 	for row in data:
-		ret += row
-		ret += "\n"
+		for elem in row:
+			print elem
+			ret += elem
+			ret += "\n"
 
 
 	# disconnect from server
