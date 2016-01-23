@@ -106,6 +106,7 @@ def signIn(classid, studentid):
 	try:
 		# execute SQL query using execute() method.
 		cursor.execute("INSERT INTO Attendance values (" + classid + ", " + studentid + ", CURRENT_TIMESTAMP, True)")
+		db.commit()
 		output = 1
 	except MySQLdb.IntegrityError:
 		output = 0
