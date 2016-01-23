@@ -90,9 +90,10 @@ def fetchBooks( ):
 		return 1;
 	return 0;
 
-# put in SID as param later
-@app.route('/classroom/attendance/signin')
-def signIn():
+# returns 1 if signIn was successful
+# returns 0 if not successful
+@app.route('/classroom/attendance/signin/<classid>/<studentid>')
+def signIn(classid, studentid):
 	#check if they've picked up textbooks
 	#if not, respond to notify to grab them
 	# Open database connection
@@ -101,14 +102,38 @@ def signIn():
 	# prepare a cursor object using cursor() method
 	cursor = db.cursor()
 
+	output = 0
+	try:
+		# execute SQL query using execute() method.
+		cursor.execute("INSERT INTO Attendance values (classid, studentid, CURRENT_TIMESTAMP, True)")
+		output = 1
+	except MySQLdb.IntegrityError:
+		output = 0
+	finally:
+		# disconnect from server
+		db.close()
+		
+	return jsonify({'result' : output})
+	
+# return 1 if student was already signed in, 0 if not signedin yet
+@app.route('/classroom/attendance/checksignedin/<studentid>')
+def checkSignedIn(studentid):
+	# Open database connection
+	db = MySQLdb.connect("localhost","root","D0nkeyba!!s","mobievent" )
+
+	# prepare a cursor object using cursor() method
+	cursor = db.cursor()
+
 	# execute SQL query using execute() method.
-	cursor.execute("INSERT INTO Attendance values (372, 1, CURRENT_TIMESTAMP, True)")
-
-	print "attendance input successful"
-
-	# disconnect from server
+	cursor.execute("SELECT * FROM Attendance where sid = studentid and date(date) = curdate()")
+	data = cursor.fetchall()
+	
 	db.close()
-	return "data"
+	
+	if len(data)>0:
+		return jsonify({'result' : 1})
+		
+	return jsonify({'result' : 0})
 	
 
 if __name__ == '__main__':
