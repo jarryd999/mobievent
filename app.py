@@ -9,9 +9,6 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return "Hello, World!"
-
-# README
-# ADD VAR TO URL AND TEST THAT	
 	
 #handle walking by the store
 #http://ourserver.cloud.google.com/bookstore/nearby
@@ -68,7 +65,7 @@ def insideBookstore( ):
 		return 1;
 	return 0;	
 
-#send the book order over to the book store client and let student know of wait
+#check what books student needs to buy
 @app.route('/bookstore/fetchBooks/<studentid>')
 def fetchBooks(studentid):
 	# Open database connection
@@ -134,6 +131,23 @@ def checkSignedIn(classid, studentid):
 		
 	return jsonify({'result' : 0})
 	
+# return all students who are signed into attendance for the day
+@app.route('/classroom/attendance/getsigninlist/<classid>')
+def getSignInList(classid):
+	# Open database connection
+	db = MySQLdb.connect("localhost","root","D0nkeyba!!s","mobievent" )
+
+	# prepare a cursor object using cursor() method
+	cursor = db.cursor()
+	
+	# execute SQL query using execute() method.
+	cursor.execute("select distinct Student.sid, Student.name from Student, Attendance where Student.sid = \
+Attendance.sid and date(date) = curdate() and cid = " + classid)
+	data = cursor.fetchall()
+	
+	db.close()
+	
+	return jsonify( {'result' : data} )
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
