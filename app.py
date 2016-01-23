@@ -10,6 +10,9 @@ app = Flask(__name__)
 def index():
     return "Hello, World!"
 
+# README
+# ADD VAR TO URL AND TEST THAT	
+	
 #handle walking by the store
 #http://ourserver.cloud.google.com/bookstore/nearby
 @app.route('/bookstore/nearby')
@@ -34,12 +37,12 @@ def nearbyBookstore( ):
 		for elem in row:
 			print elem	
 			ret += str(elem)
-			ret += "<br>"
+			ret += "\n"
 
 
 	# disconnect from server
 	db.close()
-	return ret
+	return jsonify( {'result' : data})
 
 # put in SID as param later
 @app.route('/classroom/attendance/signin')
