@@ -124,8 +124,9 @@ def checkSignedIn(studentid):
 	# prepare a cursor object using cursor() method
 	cursor = db.cursor()
 
+	
 	# execute SQL query using execute() method.
-	cursor.execute("SELECT * FROM Attendance where sid = studentid and date(date) = curdate()")
+	cursor.execute("SELECT * FROM Attendance where sid = " + studentid + " and date(date) = curdate()")
 	data = cursor.fetchall()
 	
 	db.close()
