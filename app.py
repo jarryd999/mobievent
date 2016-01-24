@@ -1,11 +1,15 @@
 #!flask/bin/python
 from flask import Flask
 from flask import jsonify
+import math
 import MySQLdb
 
 
 
 app = Flask(__name__)
+root = QTNode(false, 0, 0, 64, 64)
+paintedThrice = [];
+
 @app.route('/')
 def index():
     return "Hello, World!"
@@ -142,6 +146,90 @@ Attendance.sid and date(date) = curdate() and cid = " + classid)
 	db.close()
 	
 	return jsonify( {'result' : data} )
+
+@app.route('/map/getCoords/<TX1>/<TX2>/<TX3>')
+def getCoords(TX1, TX2, TX3):
+
+	paint(root, 0, 0, TX1);
+	paint(root, 0, 0, TX2);
+	paint(root, 0, 0, TX3);
+	xCord = 0
+	yCord = 0
+
+	for tuple in paintedThrice:
+		xCord += tuple[1]
+		yCord += tuple[0]
+
+	ret = [xCord * 7, yCord * 7]
+	return jsonify({'data':ret})
+
+class QTNode:
+	paintCount = 0
+	nw = None
+	ne = None
+	sw = None
+	se = None
+	parent = None
+
+	def __init__(self, color, topX, topY, botX, botY):
+		self.color = color
+		self.topX = topX
+		self.topY = topY
+		self.botX = botX
+		self.botY = botY
+
+	def switchColor():
+		self.color = not self.color
+		self.paintCount += 1
+		if self.paintCount == 3
+			paintedThrice.append([topX, topY, botX, botY])
+
+
+# need to initialize the quadtree
+
+def contains(region, centerX, centerY):
+	return centerX > region.topX and centerX < region.botX and centerY > region.topY and centerY < region.botY
+
+def paintCrawlIncrementUp(region):
+	region.paintCount += 1
+	if region == root:
+		return
+	paintCrawlIncrementUp(region.parent)
+
+def paintCrawl(region, flag):
+	region.paintCount += 1
+
+	if flag:
+		paintCrawlIncrementUp(region.parent)
+
+	if isLeaf(region):
+		region.switchColor()
+		return
+	paintCrawl(region.nw, False)
+	paintCrawl(region.ne, False)
+	paintCrawl(region.sw, False)
+	paintCrawl(region.se, False)
+
+def paint(region, centerX, centerY, radius):
+	if region == None:
+		return
+	offset = radius * math.cos(math.radians(45))
+	if contains(region, centerX, centerY) or contains(region, centerX + offset, centerY + offset) 
+	or contains(region, centerX + offset, centerY - offset) or contains(region, centerX - offset, centerY + offset)
+	or contains(region, centerX - offset, centerY - offset) or contains(region, centerX + radius, centerY)
+	or contains(region, centerX - radius, centerY) or contains(region, centerX, centerY + radius)
+	or contains(region, centerX, centerY - radius):
+		return
+	distanceTop = sqrt( (region.topX - centerX)**2 + (region.topY - centerY)**2)
+	distanceBot = sqrt( (region.botX - centerX)**2 + (region.botY - centerY)**2)
+	if distanceTop < radius and distanceBot < radius:
+		paintCrawl(region, True)
+
+	paint(region.nw, centerX, centerY, radius)
+	paint(region.ne, centerX, centerY, radius)
+	paint(region.sw, centerX, centerY, radius)
+	paint(region.se, centerX, centerY, radius)
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
