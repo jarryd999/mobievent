@@ -181,7 +181,7 @@ class QTNode:
 	def switchColor():
 		self.color = not self.color
 		self.paintCount += 1
-		if self.paintCount == 3
+		if self.paintCount == 3:
 			paintedThrice.append([topX, topY, botX, botY])
 
 
