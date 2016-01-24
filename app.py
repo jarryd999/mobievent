@@ -19,12 +19,13 @@ class QTNode:
 		self.topY = topY
 		self.botX = botX
 		self.botY = botY
+		self.paintCount = 0
 
 	def switchColor():
 		self.color = not self.color
 		self.paintCount += 1
-		if self.paintCount == 3:
-			paintedThrice.append([topX, topY, botX, botY])
+		if self.paintCount == 2:
+			paintedThrice.append([topX, topY])
 
 
 
@@ -184,15 +185,15 @@ Attendance.sid and date(date) = curdate() and cid = " + classid)
 @app.route('/map/getCoords/<TX1>/<TX2>/<TX3>')
 def getCoords(TX1, TX2, TX3):
 
-	paint(root, 0, 0, TX1);
-	paint(root, 0, 0, TX2);
-	paint(root, 0, 0, TX3);
+	paint(root, 0, 0, int(TX1));
+	paint(root, 32, 0, int(TX2));
+	paint(root, 64, 64, int(TX3));
 	xCord = 0
 	yCord = 0
 
 	for tuple in paintedThrice:
-		xCord += tuple[1]
-		yCord += tuple[0]
+		xCord += tuple[0]
+		yCord += tuple[1]
 
 	ret = [xCord * 7, yCord * 7]
 	return jsonify({'data':ret})
@@ -237,9 +238,13 @@ def paint(region, centerX, centerY, radius):
 	if distanceTop < radius and distanceBot < radius:
 		paintCrawl(region, True)
 
+	print "nw"
 	paint(region.nw, centerX, centerY, radius)
+	print "ne"
 	paint(region.ne, centerX, centerY, radius)
+	print "sw"
 	paint(region.sw, centerX, centerY, radius)
+	print "se"
 	paint(region.se, centerX, centerY, radius)
 
 
