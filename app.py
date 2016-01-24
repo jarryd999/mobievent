@@ -24,8 +24,9 @@ class QTNode:
 	def switchColor():
 		self.color = not self.color
 		self.paintCount += 1
-		if self.paintCount == 2:
-			paintedThrice.append([topX, topY])
+		# temp commenting
+		#if self.paintCount == 3:
+		#	paintedThrice.append([topX, topY])
 
 
 
@@ -200,10 +201,13 @@ def getCoords(TX1, TX2, TX3):
 	yCord = 0
 
 	for tuple in paintedThrice:
-		xCord += tuple[0]
-		yCord += tuple[1]
+		xCord += tuple.topX;
+		yCord += tuple.topY;
 
-	ret = [xCord * 7, yCord * 7]
+	if not len(paintedThrice) == 0:
+		ret = [xCord / len(paintedThrice), yCord / len(paintedThrice)]
+	else:
+		ret = [-1,-1]
 	return jsonify({'data':ret})
 
 # need to initialize the quadtree
@@ -211,7 +215,20 @@ def getCoords(TX1, TX2, TX3):
 def contains(region, centerX, centerY):
 	return centerX > region.topX and centerX < region.botX and centerY > region.topY and centerY < region.botY
 
+def exploreTree(node):
+	if node is None:
+		return
+	if node.color = True and node.paintCount >= 3:
+		paintedThrice.append(node)
+	
+	exploreTree(node.nw)
+	exploreTree(node.ne)
+	exploreTree(node.sw)
+	exploreTree(node.se)
+	
 def paintCrawlIncrementUp(region):
+	## temporary
+	return
 	region.paintCount += 1
 	if region == root:
 		return
