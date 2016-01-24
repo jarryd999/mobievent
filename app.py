@@ -127,7 +127,7 @@ def checkSignedIn(classid, studentid):
 	db.close()
 	
 	if len(data)>0:
-		return jsonify({'result' : data})
+		return jsonify({'result' : 1})
 		
 	return jsonify({'result' : 0})
 	
