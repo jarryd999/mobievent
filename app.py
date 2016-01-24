@@ -32,6 +32,18 @@ app = Flask(__name__)
 root = QTNode(False, 0, 0, 64, 64)
 paintedThrice = [];
 
+def buildQT(node):
+	if node.topX == (node.botX+1) and (node.topY+1) == node.botY:
+		return # stop, leaf node
+	
+	centerX = (botX - topX) / 2
+	centerY = (botY - topY) / 2
+	
+	node.nw = QTNode(False, topX, topY, centerX, centerY)
+	node.ne = QTNode(False, centerX, topY, botX, centerY)
+	node.sw = QTNode(False, topX, centerY, centerX, botY)
+	node.se = QTNode(False, centerX, centerY, botX, botY)
+
 @app.route('/')
 def index():
     return "Hello, World!"
