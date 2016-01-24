@@ -10,7 +10,6 @@ app = Flask(__name__)
 def index():
     return "Hello, World!"
 	
-# don't use
 #handle walking by the store
 #http://ourserver.cloud.google.com/bookstore/nearby
 @app.route('/bookstore/nearby/<SID>')
@@ -24,19 +23,10 @@ def nearbyBookstore( SID ):
 	cursor = db.cursor()
 	
 	# execute SQL query using execute() method.
-	cursor.execute("Select ISBN from BookCourse where CID in ( SELECT CID from Enroll where SID = " + SID ") and NOT IN ( SELECT ISBN FROM Reservation where SID = " + SID + ")"
+	cursor.execute("Select ISBN from BookCourse where CID in ( SELECT CID from Enroll where SID = " + SID ") and NOT IN ( SELECT ISBN FROM Reservation where SID = " + SID + ")")
 
 	# Fetch a single row using fetchone() method.
 	data = cursor.fetchall()
-	
-	ret = ""
-	
-	for row in data:
-		for elem in row:
-			print elem	
-			ret += str(elem)
-			ret += "\n"
-
 
 	# disconnect from server
 	db.close()
