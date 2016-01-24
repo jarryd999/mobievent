@@ -12,8 +12,8 @@ def index():
 	
 #handle walking by the store
 #http://ourserver.cloud.google.com/bookstore/nearby
-@app.route('/bookstore/nearby')
-def nearbyBookstore( ):
+@app.route('/bookstore/nearby/<SID>')
+def nearbyBookstore( SID ):
 	#check if they've picked up textbooks
 	#if not, respond to notify to grab them
 	# Open database connection
@@ -23,7 +23,7 @@ def nearbyBookstore( ):
 	cursor = db.cursor()
 	
 	# execute SQL query using execute() method.
-	cursor.execute("Select ISBN from BookCourse where CID in ( SELECT CID from Enroll where SID = 4)")
+	cursor.execute("Select ISBN from BookCourse where CID in ( SELECT CID from Enroll where SID = " + SID ") and NOT IN ( SELECT ISBN FROM Reservation where SID = " + SID + ")"
 
 	# Fetch a single row using fetchone() method.
 	data = cursor.fetchall()
