@@ -218,6 +218,8 @@ def contains(region, centerX, centerY):
 def exploreTree(node):
 	if node is None:
 		return
+	if node.paintCount > 0:
+		print "found something" + node.topX + " " + node.topY
 	if node.color == True and node.paintCount >= 3:
 		paintedThrice.append(node)
 	
@@ -237,6 +239,8 @@ def paintCrawlIncrementUp(region):
 def paintCrawl(region, flag):
 	region.paintCount += 1
 
+	if region == None:
+		return
 	if flag:
 		paintCrawlIncrementUp(region.parent)
 
