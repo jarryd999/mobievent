@@ -24,7 +24,7 @@ def nearbyBookstore( studentid ):
 	
 	# execute SQL query using execute() method.
 	#cursor.execute("Select ISBN from BookCourse where CID in ( SELECT CID from Enroll where SID = " + SID + ") and ISBN NOT IN ( SELECT ISBN FROM Reservation where SID = " + SID + ")")
-	cursor.execute("select distinct Book.ISBN, Book.Name, Book.Price from BookCourse, Book, Enroll where Enroll.CID = BookCourse.CID and BookCourse.ISBN = Book.ISBNand SID = " + studentid + " and Book.ISBN not in (select BookReservation.ISBN from BookReservation where SID = " + studentid + ")")
+	cursor.execute("select distinct Book.ISBN, Book.Name, Book.Price from BookCourse, Book, Enroll where Enroll.CID = BookCourse.CID and BookCourse.ISBN = Book.ISBN and SID = " + studentid + " and Book.ISBN not in (select BookReservation.ISBN from BookReservation where SID = " + studentid + ")")
 	
 	# Fetch a single row using fetchone() method.
 	data = cursor.fetchall()
