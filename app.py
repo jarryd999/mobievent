@@ -265,6 +265,7 @@ def paint(region, centerX, centerY, radius):
 	distanceTop = math.sqrt( (region.topX - centerX)**2 + (region.topY - centerY)**2)
 	distanceBot = math.sqrt( (region.botX - centerX)**2 + (region.botY - centerY)**2)
 	if distanceTop < radius and distanceBot < radius:
+		print "paintcrawl started"
 		paintCrawl(region, True)
 
 	print "nw"
