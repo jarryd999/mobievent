@@ -194,8 +194,8 @@ def getCoords(TX1, TX2, TX3):
 	print TX3
 	
 	paint(root, 0, 0, int(TX1));
-	paint(root, 32, 0, int(TX2));
-	paint(root, 64, 64, int(TX3));
+	paint(root, 32, 64, int(TX2));
+	paint(root, 64, 0, int(TX3));
 	xCord = 0
 	yCord = 0
 
