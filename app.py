@@ -1,7 +1,7 @@
 #!flask/bin/python
 from flask import Flask
 from flask import jsonify
-import math
+import sqrt from math
 import MySQLdb
 
 
