@@ -44,6 +44,10 @@ def buildQT(node):
 	node.ne = QTNode(False, centerX, topY, botX, centerY)
 	node.sw = QTNode(False, topX, centerY, centerX, botY)
 	node.se = QTNode(False, centerX, centerY, botX, botY)
+	buildQT(node.nw)
+	buildQT(node.ne)
+	buildQT(node.sw)
+	buildQT(node.se)
 
 @app.route('/')
 def index():
