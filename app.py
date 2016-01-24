@@ -218,7 +218,7 @@ def contains(region, centerX, centerY):
 def exploreTree(node):
 	if node is None:
 		return
-	if node.color = True and node.paintCount >= 3:
+	if node.color == True and node.paintCount >= 3:
 		paintedThrice.append(node)
 	
 	exploreTree(node.nw)
