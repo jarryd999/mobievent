@@ -189,6 +189,10 @@ Attendance.sid and date(date) = curdate() and cid = " + classid)
 @app.route('/map/getCoords/<TX1>/<TX2>/<TX3>')
 def getCoords(TX1, TX2, TX3):
 
+	print TX1
+	print TX2
+	print TX3
+	
 	paint(root, 0, 0, int(TX1));
 	paint(root, 32, 0, int(TX2));
 	paint(root, 64, 64, int(TX3));
