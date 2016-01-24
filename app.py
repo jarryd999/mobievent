@@ -23,7 +23,7 @@ def nearbyBookstore( SID ):
 	cursor = db.cursor()
 	
 	# execute SQL query using execute() method.
-	cursor.execute("Select ISBN from BookCourse where CID in ( SELECT CID from Enroll where SID = " + SID ") and NOT IN ( SELECT ISBN FROM Reservation where SID = " + SID + ")")
+	cursor.execute("Select ISBN from BookCourse where CID in ( SELECT CID from Enroll where SID = " + SID + ") and NOT IN ( SELECT ISBN FROM Reservation where SID = " + SID + ")")
 
 	# Fetch a single row using fetchone() method.
 	data = cursor.fetchall()
