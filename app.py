@@ -33,6 +33,22 @@ app = Flask(__name__)
 root = QTNode(False, 0, 0, 64, 64)
 paintedThrice = [];
 
+def buildQT(node):
+	if node.topX == (node.botX+1) and (node.topY+1) == node.botY:
+		return # stop, leaf node
+	
+	centerX = (botX - topX) / 2
+	centerY = (botY - topY) / 2
+	
+	node.nw = QTNode(False, topX, topY, centerX, centerY)
+	node.ne = QTNode(False, centerX, topY, botX, centerY)
+	node.sw = QTNode(False, topX, centerY, centerX, botY)
+	node.se = QTNode(False, centerX, centerY, botX, botY)
+	buildQT(node.nw)
+	buildQT(node.ne)
+	buildQT(node.sw)
+	buildQT(node.se)
+
 @app.route('/')
 def index():
     return "Hello, World!"
@@ -173,9 +189,13 @@ Attendance.sid and date(date) = curdate() and cid = " + classid)
 @app.route('/map/getCoords/<TX1>/<TX2>/<TX3>')
 def getCoords(TX1, TX2, TX3):
 
+	print TX1
+	print TX2
+	print TX3
+	
 	paint(root, 0, 0, int(TX1));
-	paint(root, 32, 0, int(TX2));
-	paint(root, 64, 64, int(TX3));
+	paint(root, 32, 64, int(TX2));
+	paint(root, 64, 0, int(TX3));
 	xCord = 0
 	yCord = 0
 
@@ -215,15 +235,14 @@ def paint(region, centerX, centerY, radius):
 	if region == None:
 		return
 	offset = radius * math.cos(math.radians(45))
-	if (contains(region, centerX, centerY) or contains(region, centerX + offset, centerY + offset) 
-	or contains(region, centerX + offset, centerY - offset) or contains(region, centerX - offset, centerY + offset)
-	or contains(region, centerX - offset, centerY - offset) or contains(region, centerX + radius, centerY)
-	or contains(region, centerX - radius, centerY) or contains(region, centerX, centerY + radius)
-	or contains(region, centerX, centerY - radius)):
-
+	if (not contains(region, centerX, centerY) and not contains(region, centerX + offset, centerY + offset) 
+	and not contains(region, centerX + offset, centerY - offset) and not contains(region, centerX - offset, centerY + offset)
+	and not contains(region, centerX - offset, centerY - offset) and not contains(region, centerX + radius, centerY)
+	and not contains(region, centerX - radius, centerY) and not contains(region, centerX, centerY + radius)
+	and not contains(region, centerX, centerY - radius)):
 		return
-	distanceTop = sqrt( (region.topX - centerX)**2 + (region.topY - centerY)**2)
-	distanceBot = sqrt( (region.botX - centerX)**2 + (region.botY - centerY)**2)
+	distanceTop = math.sqrt( (region.topX - centerX)**2 + (region.topY - centerY)**2)
+	distanceBot = math.sqrt( (region.botX - centerX)**2 + (region.botY - centerY)**2)
 	if distanceTop < radius and distanceBot < radius:
 		paintCrawl(region, True)
 
