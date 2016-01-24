@@ -225,9 +225,13 @@ def paint(region, centerX, centerY, radius):
 	if distanceTop < radius and distanceBot < radius:
 		paintCrawl(region, True)
 
+	print "nw"
 	paint(region.nw, centerX, centerY, radius)
+	print "ne"
 	paint(region.ne, centerX, centerY, radius)
+	print "sw"
 	paint(region.sw, centerX, centerY, radius)
+	print "se"
 	paint(region.se, centerX, centerY, radius)
 
 
