@@ -235,11 +235,11 @@ def paint(region, centerX, centerY, radius):
 	if region == None:
 		return
 	offset = radius * math.cos(math.radians(45))
-	if (!contains(region, centerX, centerY) and !contains(region, centerX + offset, centerY + offset) 
-	and !contains(region, centerX + offset, centerY - offset) and !contains(region, centerX - offset, centerY + offset)
-	and !contains(region, centerX - offset, centerY - offset) and !contains(region, centerX + radius, centerY)
-	and !contains(region, centerX - radius, centerY) and !contains(region, centerX, centerY + radius)
-	and !contains(region, centerX, centerY - radius)):
+	if (not contains(region, centerX, centerY) and not contains(region, centerX + offset, centerY + offset) 
+	and not contains(region, centerX + offset, centerY - offset) and not contains(region, centerX - offset, centerY + offset)
+	and not contains(region, centerX - offset, centerY - offset) and not contains(region, centerX + radius, centerY)
+	and not contains(region, centerX - radius, centerY) and not contains(region, centerX, centerY + radius)
+	and not contains(region, centerX, centerY - radius)):
 		return
 	distanceTop = sqrt( (region.topX - centerX)**2 + (region.topY - centerY)**2)
 	distanceBot = sqrt( (region.botX - centerX)**2 + (region.botY - centerY)**2)
