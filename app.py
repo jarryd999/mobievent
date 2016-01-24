@@ -10,6 +10,7 @@ app = Flask(__name__)
 def index():
     return "Hello, World!"
 	
+# don't use
 #handle walking by the store
 #http://ourserver.cloud.google.com/bookstore/nearby
 @app.route('/bookstore/nearby')
@@ -41,7 +42,7 @@ def nearbyBookstore( ):
 	db.close()
 	return jsonify( {'result' : data})
 
-
+# don't use for now, need to json the output and determine what to return
 #check what books student needs to buy, prompt if (s)he wants to buy now
 #output: (int) 0 if they don't need books, 1 if they do
 @app.route('/bookstore/onEnter')
@@ -66,7 +67,7 @@ def insideBookstore( ):
 	return 0;	
 
 #check what books student needs to buy
-@app.route('/bookstore/fetchBooks/<studentid>')
+@app.route('/bookstore/fetchbooks/<studentid>')
 def fetchBooks(studentid):
 	# Open database connection
 	db = MySQLdb.connect("localhost","root","D0nkeyba!!s","mobievent" )
