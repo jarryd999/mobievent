@@ -5,6 +5,28 @@ import math
 import MySQLdb
 
 
+class QTNode:
+	paintCount = 0
+	nw = None
+	ne = None
+	sw = None
+	se = None
+	parent = None
+
+	def __init__(self, color, topX, topY, botX, botY):
+		self.color = color
+		self.topX = topX
+		self.topY = topY
+		self.botX = botX
+		self.botY = botY
+
+	def switchColor():
+		self.color = not self.color
+		self.paintCount += 1
+		if self.paintCount == 3:
+			paintedThrice.append([topX, topY, botX, botY])
+
+
 
 app = Flask(__name__)
 root = QTNode(false, 0, 0, 64, 64)
@@ -162,28 +184,6 @@ def getCoords(TX1, TX2, TX3):
 
 	ret = [xCord * 7, yCord * 7]
 	return jsonify({'data':ret})
-
-class QTNode:
-	paintCount = 0
-	nw = None
-	ne = None
-	sw = None
-	se = None
-	parent = None
-
-	def __init__(self, color, topX, topY, botX, botY):
-		self.color = color
-		self.topX = topX
-		self.topY = topY
-		self.botX = botX
-		self.botY = botY
-
-	def switchColor():
-		self.color = not self.color
-		self.paintCount += 1
-		if self.paintCount == 3:
-			paintedThrice.append([topX, topY, botX, botY])
-
 
 # need to initialize the quadtree
 
