@@ -104,6 +104,7 @@ def signIn(classid, studentid):
 		db.commit()
 		output = 1
 	except MySQLdb.IntegrityError:
+		print "IntegrityError occured in signIn"
 		output = 0
 	finally:
 		# disconnect from server
