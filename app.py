@@ -12,8 +12,8 @@ def index():
 	
 #handle walking by the store
 #http://ourserver.cloud.google.com/bookstore/nearby
-@app.route('/bookstore/nearby/<SID>')
-def nearbyBookstore( SID ):
+@app.route('/bookstore/nearby/<studentid>')
+def nearbyBookstore( studentid ):
 	#check if they've picked up textbooks
 	#if not, respond to notify to grab them
 	# Open database connection
@@ -23,8 +23,9 @@ def nearbyBookstore( SID ):
 	cursor = db.cursor()
 	
 	# execute SQL query using execute() method.
-	cursor.execute("Select ISBN from BookCourse where CID in ( SELECT CID from Enroll where SID = " + SID + ") and NOT IN ( SELECT ISBN FROM Reservation where SID = " + SID + ")")
-
+	#cursor.execute("Select ISBN from BookCourse where CID in ( SELECT CID from Enroll where SID = " + SID + ") and ISBN NOT IN ( SELECT ISBN FROM Reservation where SID = " + SID + ")")
+	cursor.execute("select distinct Book.ISBN, Book.Name, Book.Price from BookCourse, Book, Enroll where Enroll.CID = BookCourse.CID and BookCourse.ISBN = Book.ISBNand SID = " + studentid + " and Book.ISBN not in (select BookReservation.ISBN from BookReservation where SID = 4)")
+	
 	# Fetch a single row using fetchone() method.
 	data = cursor.fetchall()
 
@@ -66,8 +67,7 @@ def fetchBooks(studentid):
 	cursor = db.cursor()
 	
 	# execute SQL query using execute() method.
-	cursor.execute("select distinct Book.ISBN, Book.Name, Book.Price from BookCourse, Book, Enroll where Bo\
-okCourse.CID = Enroll.cid and Book.ISBN = BookCourse.ISBN and sid = " + studentid)
+	cursor.execute("select distinct Book.ISBN, Book.Name, Book.Price from BookCourse, Book, Enroll where BookCourse.CID = Enroll.cid and Book.ISBN = BookCourse.ISBN and sid = " + studentid)
 
 	# Fetch a single row using fetchone() method.
 	data = cursor.fetchall()
@@ -75,7 +75,14 @@ okCourse.CID = Enroll.cid and Book.ISBN = BookCourse.ISBN and sid = " + studenti
 	db.close()
 
 	return jsonify({'result' : data})
-
+	
+select distinct Book.ISBN, Book.Name, Book.Price 
+from BookCourse, Book, Enroll 
+where Enroll.CID = BookCourse.CID and BookCourse.ISBN = Book.ISBN
+and SID = 4 and Book.ISBN not in 
+(select BookReservation.ISBN from BookReservation
+	where SID = 4)
+	
 # returns 1 if signIn was successful
 # returns 0 if not successful
 @app.route('/classroom/attendance/signin/<classid>/<studentid>')
