@@ -29,7 +29,7 @@ class QTNode:
 
 
 app = Flask(__name__)
-root = QTNode(false, 0, 0, 64, 64)
+root = QTNode(False, 0, 0, 64, 64)
 paintedThrice = [];
 
 @app.route('/')
