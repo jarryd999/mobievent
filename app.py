@@ -172,9 +172,9 @@ Attendance.sid and date(date) = curdate() and cid = " + classid)
 @app.route('/map/getCoords/<TX1>/<TX2>/<TX3>')
 def getCoords(TX1, TX2, TX3):
 
-	paint(root, 0, 0, TX1);
-	paint(root, 0, 0, TX2);
-	paint(root, 0, 0, TX3);
+	paint(root, 0, 0, int(TX1));
+	paint(root, 0, 0, int(TX2));
+	paint(root, 0, 0, int(TX3));
 	xCord = 0
 	yCord = 0
 
