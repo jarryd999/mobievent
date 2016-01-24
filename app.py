@@ -1,7 +1,7 @@
 #!flask/bin/python
 from flask import Flask
 from flask import jsonify
-import sqrt from math
+import math
 import MySQLdb
 
 
@@ -241,8 +241,8 @@ def paint(region, centerX, centerY, radius):
 	and not contains(region, centerX - radius, centerY) and not contains(region, centerX, centerY + radius)
 	and not contains(region, centerX, centerY - radius)):
 		return
-	distanceTop = sqrt( (region.topX - centerX)**2 + (region.topY - centerY)**2)
-	distanceBot = sqrt( (region.botX - centerX)**2 + (region.botY - centerY)**2)
+	distanceTop = math.sqrt( (region.topX - centerX)**2 + (region.topY - centerY)**2)
+	distanceBot = math.sqrt( (region.botX - centerX)**2 + (region.botY - centerY)**2)
 	if distanceTop < radius and distanceBot < radius:
 		paintCrawl(region, True)
 
