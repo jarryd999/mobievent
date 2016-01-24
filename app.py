@@ -76,13 +76,6 @@ def fetchBooks(studentid):
 
 	return jsonify({'result' : data})
 	
-select distinct Book.ISBN, Book.Name, Book.Price 
-from BookCourse, Book, Enroll 
-where Enroll.CID = BookCourse.CID and BookCourse.ISBN = Book.ISBN
-and SID = 4 and Book.ISBN not in 
-(select BookReservation.ISBN from BookReservation
-	where SID = 4)
-	
 # returns 1 if signIn was successful
 # returns 0 if not successful
 @app.route('/classroom/attendance/signin/<classid>/<studentid>')
