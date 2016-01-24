@@ -19,12 +19,13 @@ class QTNode:
 		self.topY = topY
 		self.botX = botX
 		self.botY = botY
+		self.paintCount = 0
 
 	def switchColor():
 		self.color = not self.color
 		self.paintCount += 1
 		if self.paintCount == 3:
-			paintedThrice.append([topX, topY, botX, botY])
+			paintedThrice.append([topX, topY])
 
 
 
@@ -179,8 +180,8 @@ def getCoords(TX1, TX2, TX3):
 	yCord = 0
 
 	for tuple in paintedThrice:
-		xCord += tuple[1]
-		yCord += tuple[0]
+		xCord += tuple[0]
+		yCord += tuple[1]
 
 	ret = [xCord * 7, yCord * 7]
 	return jsonify({'data':ret})
